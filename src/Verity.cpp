@@ -1,25 +1,14 @@
 #include "Verity.h"
 
-Verity::Verity(statue_t outsideCallouts[3], shape_t insideCallouts[3])
+Verity::Verity(Statue outsideCallouts[3], shape_t insideCallouts[3])
+:
+m_leftOut(outsideCallouts[0]),
+m_middleOut(outsideCallouts[1]),
+m_rightOut(outsideCallouts[2]),
+m_leftIn(insideCallouts[0]),
+m_middleIn(insideCallouts[1]),
+m_rightIn(insideCallouts[2])
 {
-    setOutsideCallouts(outsideCallouts[0], outsideCallouts[1], outsideCallouts[2]);
-    setInsideCallouts(insideCallouts[0], insideCallouts[1], insideCallouts[2]);
-
-    evalStatues();
-}
-
-void Verity::setInsideCallouts(shape_t left, shape_t middle, shape_t right)
-{
-    m_leftIn = left;
-    m_middleIn = middle;
-    m_rightIn = middle;
-}
-
-void Verity::setOutsideCallouts(statue_t left, statue_t middle, statue_t right)
-{
-    m_leftOut = left;
-    m_middleOut = middle;
-    m_rightOut = right;
 }
 
 shape_t Verity::getInsideCallout(position_t index)
@@ -38,7 +27,7 @@ shape_t Verity::getInsideCallout(position_t index)
     }
 }
 
-statue_t Verity::getOutsideCallout(position_t index)
+Statue Verity::getOutsideCallout(position_t index)
 {
     switch (index)
     {
@@ -52,15 +41,6 @@ statue_t Verity::getOutsideCallout(position_t index)
             return m_rightOut;
             break;
     }
-}
-
-void Verity::evalStatues()
-{
-    // Evaluate left statue
-
-    // Evaluate middle statue
-
-    // Evaluate right statue
 }
 
 std::string Verity::calculate()
