@@ -120,15 +120,12 @@ bool Statue::isNeeded(shape_t shape)
 
 bool Statue::isComplete()
 {
-    for (int i = 0; i < 2; i++)
+    if (has[0] != m_callout && has[1] != m_callout && has[0] != has[1])
     {
-        if (needs[i] != -1 && errors[i] != -1)
-        {
-            return false;
-        }
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 void Statue::changeShape(shape_t to, shape_t from)
@@ -138,27 +135,71 @@ void Statue::changeShape(shape_t to, shape_t from)
         if (has[i] == from)
         {
             has[i] = to;
+            m_complete = isComplete();
+
+            return;
         }
     }
+}
+
+shape_t Statue::getError()
+{
+    for (int i = 0; i < 2; i++)
+    {
+        if (errors[i] != NONE)
+        {
+            return errors[i];
+        }
+    }
+
+    return NONE;
+}
+
+int Statue::getErrorIndex(shape_t shape)
+{
+    for (int i = 0; i < 2; i++)
+    {
+        if (errors[i] == shape)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int Statue::getNeededIndex(shape_t shape)
+{
+    for (int i = 0; i < 2; i++)
+    {
+        if (needs[i] == shape)
+        {
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 // Debug
 
 void Statue::printHas()
 {
-    printf("Statue\n");
+    printf("Has\n");
     printf("%d |", has[0]);
-    printf("%d\n", has[1]);
+    printf(" %d\n", has[1]);
 }
 
 void Statue::printNeeds()
 {
-    printf("%d\n", needs[0]);
-    printf("%d\n", needs[1]);
+    printf("Needs\n");
+    printf("%d |", needs[0]);
+    printf(" %d\n", needs[1]);
 }
 
 void Statue::printErrors()
 {
-    printf("%d\n", errors[0]);
-    printf("%d\n", errors[1]);
+    printf("Errors\n");
+    printf("%d |", errors[0]);
+    printf(" %d\n", errors[1]);
 }

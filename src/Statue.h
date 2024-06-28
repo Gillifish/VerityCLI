@@ -19,8 +19,6 @@ struct swap
 class Statue
 {
 private:
-    bool m_complete = false;
-
     void calcNeeds();
     void calcErrors();
 
@@ -29,6 +27,7 @@ public:
     shape_t needs[2] = {NONE, NONE};
     shape_t errors[2] = {NONE, NONE};
     shape_t m_callout;
+    bool m_complete = false;
 
     Statue(shape_t s1, shape_t s2, shape_t callout);
 
@@ -37,6 +36,9 @@ public:
     bool isNeeded(shape_t s);
     bool isComplete();
     void changeShape(shape_t to, shape_t from);
+    shape_t getError();
+    int getErrorIndex(shape_t shape);
+    int getNeededIndex(shape_t shape);
 
     // Debug functions
     void printHas();

@@ -18,8 +18,10 @@ private:
     Statue m_middleOut;
     Statue m_rightOut;
 
+    void compareStatues(Statue * main, Statue * s1);
+
 public:
-    Verity(Statue outsideCallouts[3]);
+    Verity(Statue s1, Statue s2, Statue s3);
 
     Statue getStatue(position_t index);
 
