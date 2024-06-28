@@ -2,8 +2,8 @@
 
 Statue::Statue(shape_t s1, shape_t s2, shape_t callout)
 {
-    m_has[0] = s1;
-    m_has[1] = s2;
+    has[0] = s1;
+    has[1] = s2;
     m_callout = callout;
 
     calcNeeds();
@@ -17,39 +17,39 @@ void Statue::calcNeeds()
     switch (m_callout)
     {
     case TRIANGLE:
-        if (!has(SQUARE))
+        if (!isHolding(SQUARE))
         {
-            m_needs[index] = SQUARE;
+            needs[index] = SQUARE;
             index++;
         }
 
-        if (!has(CIRCLE))
+        if (!isHolding(CIRCLE))
         {
-            m_needs[index] = CIRCLE;
+            needs[index] = CIRCLE;
         }
         break;
     case SQUARE:
-        if (!has(TRIANGLE))
+        if (!isHolding(TRIANGLE))
         {
-            m_needs[index] = TRIANGLE;
+            needs[index] = TRIANGLE;
             index++;
         }
 
-        if (!has(CIRCLE))
+        if (!isHolding(CIRCLE))
         {
-            m_needs[index] = CIRCLE;
+            needs[index] = CIRCLE;
         }
         break;
     case CIRCLE:
-        if (!has(SQUARE))
+        if (!isHolding(SQUARE))
         {
-            m_needs[index] = SQUARE;
+            needs[index] = SQUARE;
             index++;
         }
 
-        if (!has(TRIANGLE))
+        if (!isHolding(TRIANGLE))
         {
-            m_needs[index] = TRIANGLE;
+            needs[index] = TRIANGLE;
         }
         break;
     // To make the compiler happy
@@ -61,15 +61,13 @@ void Statue::calcNeeds()
 void Statue::calcErrors()
 {
     int index = 0;
-    printf("Test\n");
 
     // Calculate errors for the callout shape
     for (int i = 0; i < 2; i++)
     {
-        if (m_has[i] == m_callout)
+        if (has[i] == m_callout)
         {
-            printf("Hit\n");
-            m_errors[index] = m_has[i];
+            errors[index] = has[i];
             index++;
         }
     }
@@ -77,22 +75,19 @@ void Statue::calcErrors()
     // Calculate errors for dupe case
     if (hasDouble(TRIANGLE) && m_callout != TRIANGLE)
     {
-        printf("Test1\n");
-        m_errors[index] = TRIANGLE;
+        errors[index] = TRIANGLE;
     } else if (hasDouble(SQUARE) && m_callout != SQUARE)
     {
-        printf("Test2\n");
-        m_errors[index] = SQUARE;
+        errors[index] = SQUARE;
     } else if (hasDouble(CIRCLE) && m_callout != CIRCLE)
     {
-        printf("Test3\n");
-        m_errors[index] = CIRCLE;
+        errors[index] = CIRCLE;
     }
 }
 
-bool Statue::has(shape_t shape)
+bool Statue::isHolding(shape_t shape)
 {
-    for (shape_t s : m_has)
+    for (shape_t s : has)
     {
         if (s == shape)
         {
@@ -105,7 +100,7 @@ bool Statue::has(shape_t shape)
 
 bool Statue::hasDouble(shape_t shape)
 {
-    if (m_has[0] == shape && m_has[1] == shape)
+    if (has[0] == shape && has[1] == shape)
     {
         return true;
     }
@@ -113,9 +108,9 @@ bool Statue::hasDouble(shape_t shape)
     return false;
 }
 
-bool Statue::needs(shape_t shape)
+bool Statue::isNeeded(shape_t shape)
 {
-    if (m_needs[0] == shape || m_needs[1] == shape)
+    if (needs[0] == shape || needs[1] == shape)
     {
         return true;
     }
@@ -125,43 +120,45 @@ bool Statue::needs(shape_t shape)
 
 bool Statue::isComplete()
 {
-    return m_complete;
-}
-
-void Statue::setNeeds(int index, shape_t shape)
-{
-    if (index < 0 && index > 1)
+    for (int i = 0; i < 2; i++)
     {
-        return;
+        if (needs[i] != -1 && errors[i] != -1)
+        {
+            return false;
+        }
     }
 
-    m_needs[index] = shape;
+    return true;
 }
 
-void Statue::setErrors(int index, shape_t shape)
+void Statue::changeShape(shape_t to, shape_t from)
 {
-    if (index < 0 && index > 1)
+    for (int i = 0; i < 2; i++)
     {
-        return;
+        if (has[i] == from)
+        {
+            has[i] = to;
+        }
     }
-    
-    m_errors[index] = shape;
 }
+
+// Debug
 
 void Statue::printHas()
 {
-    printf("%d\n", m_has[0]);
-    printf("%d\n", m_has[1]);
+    printf("Statue\n");
+    printf("%d |", has[0]);
+    printf("%d\n", has[1]);
 }
 
 void Statue::printNeeds()
 {
-    printf("%d\n", m_needs[0]);
-    printf("%d\n", m_needs[1]);
+    printf("%d\n", needs[0]);
+    printf("%d\n", needs[1]);
 }
 
 void Statue::printErrors()
 {
-    printf("%d\n", m_errors[0]);
-    printf("%d\n", m_errors[1]);
+    printf("%d\n", errors[0]);
+    printf("%d\n", errors[1]);
 }
