@@ -27,3 +27,6 @@ $(TARGET): $(OBJS)
 # Clean up generated files
 clean:
 	rm -f build/*
+
+run:
+	build/Verity

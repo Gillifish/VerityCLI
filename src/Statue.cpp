@@ -6,8 +6,8 @@ Statue::Statue(shape_t s1, shape_t s2, shape_t callout)
     m_has[1] = s2;
     m_callout = callout;
 
-    void calcNeeds();
-    void calcErrors();
+    calcNeeds();
+    calcErrors();
 }
 
 void Statue::calcNeeds()
@@ -52,19 +52,24 @@ void Statue::calcNeeds()
             m_needs[index] = TRIANGLE;
         }
         break;
+    // To make the compiler happy
+    case NONE:
+        break;
     }
 }
 
 void Statue::calcErrors()
 {
     int index = 0;
+    printf("Test\n");
 
     // Calculate errors for the callout shape
-    for (shape_t s : m_has)
+    for (int i = 0; i < 2; i++)
     {
-        if (s == m_callout)
+        if (m_has[i] == m_callout)
         {
-            m_errors[index] = s;
+            printf("Hit\n");
+            m_errors[index] = m_has[i];
             index++;
         }
     }
@@ -72,12 +77,15 @@ void Statue::calcErrors()
     // Calculate errors for dupe case
     if (hasDouble(TRIANGLE) && m_callout != TRIANGLE)
     {
+        printf("Test1\n");
         m_errors[index] = TRIANGLE;
     } else if (hasDouble(SQUARE) && m_callout != SQUARE)
     {
+        printf("Test2\n");
         m_errors[index] = SQUARE;
     } else if (hasDouble(CIRCLE) && m_callout != CIRCLE)
     {
+        printf("Test3\n");
         m_errors[index] = CIRCLE;
     }
 }
@@ -115,7 +123,45 @@ bool Statue::needs(shape_t shape)
     return false;
 }
 
-bool Statue::complete()
+bool Statue::isComplete()
 {
     return m_complete;
+}
+
+void Statue::setNeeds(int index, shape_t shape)
+{
+    if (index < 0 && index > 1)
+    {
+        return;
+    }
+
+    m_needs[index] = shape;
+}
+
+void Statue::setErrors(int index, shape_t shape)
+{
+    if (index < 0 && index > 1)
+    {
+        return;
+    }
+    
+    m_errors[index] = shape;
+}
+
+void Statue::printHas()
+{
+    printf("%d\n", m_has[0]);
+    printf("%d\n", m_has[1]);
+}
+
+void Statue::printNeeds()
+{
+    printf("%d\n", m_needs[0]);
+    printf("%d\n", m_needs[1]);
+}
+
+void Statue::printErrors()
+{
+    printf("%d\n", m_errors[0]);
+    printf("%d\n", m_errors[1]);
 }

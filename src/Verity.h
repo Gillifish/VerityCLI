@@ -18,15 +18,10 @@ private:
     Statue m_middleOut;
     Statue m_rightOut;
 
-    shape_t m_leftIn;
-    shape_t m_middleIn;
-    shape_t m_rightIn;
-
 public:
-    Verity(Statue outsideCallouts[3], shape_t insideCallouts[3]);
+    Verity(Statue outsideCallouts[3]);
 
-    shape_t getInsideCallout(position_t index);
-    Statue getOutsideCallout(position_t index);
+    Statue getStatue(position_t index);
 
     std::string calculate();
 };
