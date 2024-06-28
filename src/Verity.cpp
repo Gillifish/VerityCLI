@@ -10,10 +10,10 @@ m_rightOut(s3)
 
 void Verity::compareStatues(Statue * main, Statue * s1, position_t mainPos, position_t s1Pos)
 {
-    main->m_complete = main->isComplete();
-    s1->m_complete = s1->isComplete();
+    main->complete = main->isComplete();
+    s1->complete = s1->isComplete();
 
-    if (main->m_complete || s1->m_complete)
+    if (main->complete || s1->complete)
     {
         return;
     }
@@ -32,7 +32,7 @@ void Verity::compareStatues(Statue * main, Statue * s1, position_t mainPos, posi
                 std::ostringstream oss;
                 oss << "Place " << m_shapeMap[toSwap] 
                     << " on " << m_positionMap[mainPos] 
-                    << " and " << m_shapeMap[main->needs[i]]
+                    << " ---- " << m_shapeMap[main->needs[i]]
                     << " on " << m_positionMap[s1Pos] << "\n";
 
                 m_output += oss.str();

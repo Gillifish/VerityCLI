@@ -1,6 +1,8 @@
 #include "Verity.h"
 
-int main (int argc, char *argv[]) 
+// Example implementation
+
+int main(void) 
 {
     Statue s1 = Statue(SQUARE, SQUARE, SQUARE);
     Statue s2 = Statue(CIRCLE, CIRCLE, CIRCLE);

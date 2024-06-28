@@ -135,7 +135,7 @@ void Statue::changeShape(shape_t to, shape_t from)
         if (has[i] == from)
         {
             has[i] = to;
-            m_complete = isComplete();
+            complete = isComplete();
 
             return;
         }
@@ -179,27 +179,4 @@ int Statue::getNeededIndex(shape_t shape)
     }
 
     return -1;
-}
-
-// Debug
-
-void Statue::printHas()
-{
-    printf("Has\n");
-    printf("%d |", has[0]);
-    printf(" %d\n", has[1]);
-}
-
-void Statue::printNeeds()
-{
-    printf("Needs\n");
-    printf("%d |", needs[0]);
-    printf(" %d\n", needs[1]);
-}
-
-void Statue::printErrors()
-{
-    printf("Errors\n");
-    printf("%d |", errors[0]);
-    printf(" %d\n", errors[1]);
 }
